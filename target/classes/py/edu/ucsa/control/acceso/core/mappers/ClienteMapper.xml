@@ -1,0 +1,65 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="py.edu.ucsa.control.acceso.core.persistence.ClienteMapper">
+
+	<resultMap type="Cliente" id="clienteResultMap">
+		<id column="id_cliente" javaType="long" property="id"></id>
+		
+		<result column="nombre" property="nombre"/>
+		<result column="ci_ruc" property="ciRuc"/>
+		<result column="telefono" property="telefono"/>
+		<result column="contacto" property="contacto"/>
+		<result column="contacto_telefono" property="contactoTelefono"/>
+		<result column="activo" property="activo" javaType="java.lang.Boolean" jdbcType="VARCHAR" 
+			typeHandler="py.edu.ucsa.control.acceso.core.mybatis.BooleanTypeHandler"/>
+		<result column="direccion" property="direccion"/>
+		<result column="fecha_creacion" property="fechaCreacion"/>
+		<result column="usuario_creacion" property="usuarioCreacion"/>
+
+	</resultMap>
+	
+	<sql id="queryClientes">
+			SELECT 	id_cliente, 
+					nombre, 
+					ci_ruc, 
+					telefono, 
+					contacto, 
+					contacto_telefono, 
+       				activo, 
+       				direccion, 
+       				fecha_creacion, 
+       				usuario_creacion
+			  FROM clientes
+	</sql>
+
+    <select id="listar" resultMap="clienteResultMap" >
+        <include refid="queryClientes"></include>
+    </select>
+    
+     <select id="listarById" resultMap="clienteResultMap" parameterType="long">
+        <include refid="queryClientes"></include>
+        <![CDATA[
+        	WHERE ID = #{value}
+        ]]>
+    </select>
+	
+	<insert id="insertar" parameterType="Cliente" useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+        <![CDATA[
+        	INSERT INTO clientes (id_cliente, nombre, ci_ruc, telefono, contacto, contacto_telefono, 
+            	activo, direccion, fecha_creacion, usuario_creacion)
+        	VALUES (#{id}, #{nombre, javaType=string,jdbcType=VARCHAR}, #{ciRuc}, #{telefono}, 
+        	#{contacto}, #{contactoTelefono},
+        	#{activo, javaType=boolean,jdbcType=VARCHAR, 
+        		typeHandler=py.edu.ucsa.control.acceso.core.mybatis.BooleanTypeHandler}, 
+        	#{direccion}, #{fechaCreacion}, #{usuarioCreacion})
+        	]]>
+    </insert>
+
+<!--     <update id="modificar" parameterType="Cliente"> -->
+        
+<!--     </update> -->
+
+    <delete id="eliminar" parameterType="long">
+        DELETE FROM clientes
+        WHERE id_cliente = #{id}
+    </delete>
+</mapper>
