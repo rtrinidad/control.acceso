@@ -1,5 +1,5 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="py.edu.ucsa.control.acceso.core.persistence.ClienteMapper">
+<mapper namespace="py.edu.ucsa.control.acceso.core.mappers.ClienteMapper">
 
 	<resultMap type="Cliente" id="clienteResultMap">
 		<id column="id_cliente" javaType="long" property="id"></id>
